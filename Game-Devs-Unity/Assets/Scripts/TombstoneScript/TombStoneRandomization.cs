@@ -6,7 +6,7 @@ public class TombStoneRandomization : MonoBehaviour
 {
     //variables
     public GameObject ghost;
-    public GameObject gem;
+    //public GameObject gem;
     
     void Update()
     {
@@ -32,7 +32,7 @@ public class TombStoneRandomization : MonoBehaviour
         else if (Random.value < 0.5)
         {
             //spawn gem
-            SpawnGem();
+            //SpawnGem();
 
             Debug.Log("Gem! "+ Random.value);
         }
@@ -40,19 +40,21 @@ public class TombStoneRandomization : MonoBehaviour
 
     void SpawnGhost()
     {
+        //instantiates ghosts
+        //GameObject newGhost = Instantiate(ghost, new Vector3(0.0832627f, 0.04018606f, -0.02140001f), Quaternion.identity) as GameObject;
+
+        GameObject newGhost = Instantiate(ghost, new Vector3(0.092f, 0.0552f, -0.0185f), Quaternion.AngleAxis(-90, Vector3.right)) as GameObject;
+
         //makes ghost the child of tombstone
-        ghost.transform.parent = this.gameObject.transform;
-
-        //set position for ghost
-        ghost.transform.localPosition = new Vector3(0.0816f, 0.0444f, 0.0239f);
+        newGhost.transform.parent = this.gameObject.transform;
     }
 
-    void SpawnGem()
-    {
-        //makes gem the child of tombstone
-        gem.transform.parent = this.gameObject.transform;
+    //void SpawnGem()
+    //{
+    //    //makes gem the child of tombstone
+    //    gem.transform.parent = this.gameObject.transform;
 
-        //set position for gem
-        gem.transform.localPosition = new Vector3(-0.0487f, 0.0328f, -0.0082f);
-    }
+    //    //set position for gem
+    //    gem.transform.localPosition = new Vector3(-0.0487f, 0.0328f, -0.0082f);
+    //}
 }
