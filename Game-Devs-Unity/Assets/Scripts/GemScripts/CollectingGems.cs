@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class CollectingGems : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        //if player collides (or "collects") gem, delete gem
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+            Debug.Log("Collected a gem!");
         }
     }
+
 }

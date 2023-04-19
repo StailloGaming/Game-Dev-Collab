@@ -6,12 +6,14 @@ public class TombStoneRandomization : MonoBehaviour
 {
     //variables
     public GameObject ghost;
-    //public GameObject gem;
+    public GameObject gem;
+
+    [SerializeField] private bool isNear = false;
     
     void Update()
     {
-        //player presses 'E' on tombstone
-        if (Input.GetKeyDown(KeyCode.E))
+        //if player is near tombstone & player presses 'E'
+        if (isNear == true && Input.GetKeyDown(KeyCode.E))
         {
             TombstonePercentage();
         }
@@ -32,7 +34,7 @@ public class TombStoneRandomization : MonoBehaviour
         else if (Random.value < 0.5)
         {
             //spawn gem
-            //SpawnGem();
+            SpawnGem();
 
             Debug.Log("Gem! "+ Random.value);
         }
@@ -40,21 +42,35 @@ public class TombStoneRandomization : MonoBehaviour
 
     void SpawnGhost()
     {
-        //instantiates ghosts
-        //GameObject newGhost = Instantiate(ghost, new Vector3(0.0832627f, 0.04018606f, -0.02140001f), Quaternion.identity) as GameObject;
-
-        GameObject newGhost = Instantiate(ghost, new Vector3(0.092f, 0.0552f, -0.0185f), Quaternion.AngleAxis(-90, Vector3.right)) as GameObject;
-
-        //makes ghost the child of tombstone
-        newGhost.transform.parent = this.gameObject.transform;
+        InstantiateGameObject(ghost, -1f, 2f, 0f);
     }
 
-    //void SpawnGem()
-    //{
-    //    //makes gem the child of tombstone
-    //    gem.transform.parent = this.gameObject.transform;
+    void SpawnGem()
+    {
+        InstantiateGameObject(gem, -0.0487f, 0.0328f, -0.0082f);
+    }
 
-    //    //set position for gem
-    //    gem.transform.localPosition = new Vector3(-0.0487f, 0.0328f, -0.0082f);
-    //}
+    //instatiate ghost or gem
+    void InstantiateGameObject(GameObject prefab, float x, float y, float z)
+    {
+        //instantiating
+        GameObject newPrefab = Instantiate(prefab, new Vector3(0f, 0f, 0f), Quaternion.AngleAxis(-90, Vector3.right)) as GameObject;
+
+        //set position for gem
+        newPrefab.transform.localPosition = new Vector3(x, y, z);
+    }
+
+    //bool to tell if player is near tombstone or not
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            isNear = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isNear = false;
+    }
 }
